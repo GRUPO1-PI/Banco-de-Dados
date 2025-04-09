@@ -1,4 +1,3 @@
-CREATE DATABASE sonicorp;
 USE sonicorp;
 
 CREATE TABLE cadastroEmpresa (
@@ -23,14 +22,18 @@ SELECT nome, telefone FROM cadastroEmpresa WHERE CNPJ = '12345678901234';
 
 CREATE TABLE esteira (
 	idEsteira INT PRIMARY KEY auto_increment,
-	setor VARCHAR(45)
+	setor VARCHAR(45),
+    fkCadastro INT,
+		CONSTRAINT fkSensor_Cadastro
+		FOREIGN KEY (fkCadastro)
+		REFERENCES cadastroEmpresa(idCadastro)
 );
 
-INSERT INTO esteira(setor) VALUES 
-('Produção'),
-('Embalagem'),
-('Qualidade'),
-('Expedição');
+INSERT INTO esteira(setor, fkCadastro) VALUES 
+('Produção', 1),
+('Embalagem', 2),
+('Qualidade', 3),
+('Expedição', 4);
 
 UPDATE esteira SET setor = 'Manufatura' WHERE idEsteira = 1;
 
@@ -50,28 +53,20 @@ CREATE TABLE sensor (
 	fkEsteira INT,
 		CONSTRAINT fkSensor_Esteira
 		FOREIGN KEY (fkEsteira)
-		REFERENCES esteira(idEsteira),
-	fkCadastro INT,
-		CONSTRAINT fkSensor_Cadastro
-		FOREIGN KEY (fkCadastro)
-		REFERENCES cadastroEmpresa(idCadastro)
+		REFERENCES esteira(idEsteira)
 );
-INSERT INTO sensor(numSerie, fkEsteira, fkCadastro) VALUES 
-('A12', 1, 1),
-('B34', 2, 2),
-('C56', 3, 3),
-('D78', 4, 4);
+INSERT INTO sensor(numSerie, fkEsteira) VALUES 
+('A12', 1),
+('B34', 2),
+('C56', 3),
+('D78', 4);
 
 UPDATE sensor SET numSerie = 'X99' WHERE idSensor = 3;
 SELECT * FROM sensor;
 
 UPDATE sensor SET numSerie = 'Z01', fkEsteira = 2 WHERE idSensor = 1;
 
-UPDATE sensor SET fkCadastro = 3 WHERE idSensor = 4;
-
-SELECT numSerie, fkEsteira FROM sensor WHERE fkCadastro = 3;
-
-
+SELECT numSerie, fkEsteira FROM sensor WHERE fkEsteira = 3;
 
 
 CREATE TABLE monitoramento(
@@ -98,6 +93,8 @@ UPDATE monitoramento SET alinhamento = 1 WHERE fkSensor = 2;
 
 UPDATE monitoramento SET dtMonitoramento = '2025-04-07 16:30:00' WHERE fkSensor = 4;
 
+DELETE FROM monitoramento WHERE fkSensor = 1 AND idMonitoramento = 1;
+
 SELECT fkSensor, alinhamento FROM monitoramento WHERE alinhamento = 1;
 
 
@@ -117,7 +114,7 @@ SELECT fkSensor, alinhamento FROM monitoramento WHERE alinhamento = 1;
 FROM monitoramento m
 JOIN sensor s ON m.fkSensor = s.idSensor
 JOIN esteira e ON s.fkEsteira = e.idEsteira
-JOIN cadastroEmpresa c ON s.fkCadastro = c.idCadastro;
+JOIN cadastroEmpresa c ON e.fkCadastro = c.idCadastro;
  
  
  
