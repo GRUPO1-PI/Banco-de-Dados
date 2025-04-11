@@ -20,26 +20,27 @@ UPDATE cadastroEmpresa SET telefone = '11987654322', CNPJ = '22334455667788' WHE
 SELECT * FROM cadastroEmpresa;
 SELECT nome, telefone FROM cadastroEmpresa WHERE CNPJ = '12345678901234';
 
+DELETE FROM sensor WHERE idSensor = 3;
+
+
 CREATE TABLE esteira (
 	idEsteira INT PRIMARY KEY auto_increment,
-	setor VARCHAR(45),
-    fkCadastro INT,
-		CONSTRAINT fkSensor_Cadastro
-		FOREIGN KEY (fkCadastro)
-		REFERENCES cadastroEmpresa(idCadastro)
+	setor VARCHAR(45)
 );
 
-INSERT INTO esteira(setor, fkCadastro) VALUES 
-('Produção', 1),
-('Embalagem', 2),
-('Qualidade', 3),
-('Expedição', 4);
+INSERT INTO esteira(setor) VALUES 
+('Higienização'),
+('Embalagem'),
+('Processamento'),
+('Distribuição');
 
-UPDATE esteira SET setor = 'Manufatura' WHERE idEsteira = 1;
+UPDATE esteira SET setor = 'Seleção' WHERE idEsteira = 1;
 
-UPDATE esteira SET setor = 'Controle de Qualidade' WHERE idEsteira = 3;
+UPDATE esteira SET setor = 'Armazenamento' WHERE idEsteira = 3;
 
-UPDATE esteira SET setor = 'Armazenagem' WHERE idEsteira = 4;
+UPDATE esteira SET setor = 'Embalagem' WHERE idEsteira = 4;
+
+DELETE FROM esteira WHERE idEsteira = 3;
 
 SELECT * FROM esteira;
 
@@ -53,20 +54,28 @@ CREATE TABLE sensor (
 	fkEsteira INT,
 		CONSTRAINT fkSensor_Esteira
 		FOREIGN KEY (fkEsteira)
-		REFERENCES esteira(idEsteira)
+		REFERENCES esteira(idEsteira),
+	fkCadastro INT,
+		CONSTRAINT fkSensor_Cadastro
+		FOREIGN KEY (fkCadastro)
+		REFERENCES cadastroEmpresa(idCadastro)
 );
-INSERT INTO sensor(numSerie, fkEsteira) VALUES 
-('A12', 1),
-('B34', 2),
-('C56', 3),
-('D78', 4);
+INSERT INTO sensor(numSerie, fkEsteira, fkCadastro) VALUES 
+('A12', 1, 1),
+('B34', 2, 2),
+('C56', 3, 3),
+('D78', 4, 4);
 
 UPDATE sensor SET numSerie = 'X99' WHERE idSensor = 3;
 SELECT * FROM sensor;
 
 UPDATE sensor SET numSerie = 'Z01', fkEsteira = 2 WHERE idSensor = 1;
 
-SELECT numSerie, fkEsteira FROM sensor WHERE fkEsteira = 3;
+UPDATE sensor SET fkCadastro = 3 WHERE idSensor = 4;
+
+SELECT numSerie, fkEsteira FROM sensor WHERE fkCadastro = 3;
+
+
 
 
 CREATE TABLE monitoramento(
@@ -114,7 +123,7 @@ SELECT fkSensor, alinhamento FROM monitoramento WHERE alinhamento = 1;
 FROM monitoramento m
 JOIN sensor s ON m.fkSensor = s.idSensor
 JOIN esteira e ON s.fkEsteira = e.idEsteira
-JOIN cadastroEmpresa c ON e.fkCadastro = c.idCadastro;
+JOIN cadastroEmpresa c ON s.fkCadastro = c.idCadastro;
  
  
  
