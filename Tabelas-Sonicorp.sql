@@ -1,5 +1,6 @@
 USE sonicorp;
 
+
 CREATE TABLE cadastroEmpresa (
 	idCadastro INT AUTO_INCREMENT PRIMARY KEY,
 	nome VARCHAR(100) NOT NULL,
@@ -22,6 +23,28 @@ SELECT nome, telefone FROM cadastroEmpresa WHERE CNPJ = '12345678901234';
 
 DELETE FROM sensor WHERE idSensor = 3;
 
+CREATE TABLE endereco (
+    idEndereco INT AUTO_INCREMENT PRIMARY KEY,
+    logradouro VARCHAR(100),
+    numero INT,
+    complemento VARCHAR(100),
+    bairro VARCHAR(100),
+    cidade VARCHAR(100),
+    UF CHAR(2),
+    cep VARCHAR(10),
+    fkCadastroEndereco INT NOT NULL UNIQUE,
+    FOREIGN KEY (fkCadastroEndereco) REFERENCES cadastroEmpresa(idCadastro)
+); 
+INSERT INTO endereco (logradouro, numero, complemento, bairro, cidade, UF, cep, fkCadastroEndereco)
+VALUES
+('Rua das Palmeiras', 120, 'Apto 304', 'Centro', 'São Paulo', 'SP', '01010-000', 1),
+('Av. Brasil', 450, 'Sala 10', 'Jardins', 'Rio de Janeiro', 'RJ', '20031-000', 2),
+('Praça da Liberdade', 15, 'Casa 1', 'Savassi', 'Belo Horizonte', 'MG', '30140-020', 3),
+('Av. Beira-Mar', 780, 'Cobertura', 'Meireles', 'Fortaleza', 'CE', '60165-121', 4);
+
+SELECT * 
+FROM cadastroEmpresa c
+JOIN endereco e ON c.idCadastro = e.fkCadastroEndereco;
 
 CREATE TABLE esteira (
 	idEsteira INT PRIMARY KEY auto_increment,
