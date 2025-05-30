@@ -18,12 +18,12 @@ CREATE TABLE endereco (
     logradouro VARCHAR(100) not null,
     numero INT not null,
     complemento VARCHAR(40), 
+    bairro VARCHAR(100) not null,
     cidade VARCHAR(100) not null,
     UF CHAR(2) not null,
     cep CHAR(8) not null,
     FOREIGN KEY (idEmpresa) REFERENCES empresa(idEmpresa)
 );
-
 
 CREATE TABLE representante (
     idRepresentante INT AUTO_INCREMENT PRIMARY KEY,
@@ -37,7 +37,8 @@ CREATE TABLE representante (
 );
 
 insert into representante values
-(default, 'Charles Xavier', '30550343054', '11997891312', 'xavier@email.com', 'BATATAS.', 1);
+(default, 'Charles Xavier', '30550343054', '11997891312', 'xavier@email.com', 'BATATAS.', 1),
+(default, 'Admin', '95853892395', '11984991395', 'admin3@admin.com', 'BATATAS.', 1);
 
 CREATE TABLE setor (
     idSetor INT AUTO_INCREMENT PRIMARY KEY,
@@ -56,22 +57,21 @@ insert into setor(nome, fkEmpresa) values
 ('Distribuição', 1);
 
 
-
-
 CREATE TABLE esteira (
     idEsteira INT PRIMARY KEY AUTO_INCREMENT,
     idSetor INT, -- verificar a necessidade de uma coluna metragem./ 4 sensores para cada esteira
     FOREIGN KEY (idSetor) REFERENCES setor(idSetor),
+    numero INT,
     metragem INT
 );
 
-INSERT INTO esteira (idSetor, metragem) VALUES
-(1, 8), (1, 8), (1, 8), (1, 8), (1, 8), (1, 8), (1, 8), (1, 8), -- Seleção de matéria prima
-(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8), -- Higienização
-(3, 8), (3, 8), (3, 8), (3, 8), (3, 8), (3, 8), (3, 8), (3, 8), -- Processamento
-(4, 8), (4, 8), (4, 8), (4, 8), (4, 8), (4, 8), (4, 8), (4, 8), -- Embalagem
-(5, 8), (5, 8), (5, 8), (5, 8), (5, 8), (5, 8), (5, 8), (5, 8), -- Armazenamento
-(6, 8), (6, 8), (6, 8), (6, 8), (6, 8), (6, 8), (6, 8), (6, 8); -- Distribuição
+INSERT INTO esteira (idSetor, numero, metragem) VALUES
+(1, 1, 8), (1, 2, 8), (1, 3, 8), (1, 4, 8), (1, 5, 8), (1, 6, 8), (1, 7, 8), (1, 8, 8), -- Seleção de matéria prima
+(2, 1, 8), (2, 2, 8), (2, 3, 8), (2, 4, 8), (2, 5, 8), (2, 6, 8), (2, 7, 8), (2, 8, 8), -- Higienização
+(3, 1, 8), (3, 2, 8), (3, 3, 8), (3, 4, 8), (3, 5, 8), (3, 6, 8), (3, 7, 8), (3, 8, 8), -- Processamento
+(4, 1, 8), (4, 2, 8), (4, 3, 8), (4, 4, 8), (4, 5, 8), (4, 6, 8), (4, 7, 8), (4, 8, 8), -- Embalagem
+(5, 1, 8), (5, 2, 8), (5, 3, 8), (5, 4, 8), (5, 5, 8), (5, 6, 8), (5, 7, 8), (5, 8, 8), -- Armazenamento
+(6, 1, 8), (6, 2, 8), (6, 3, 8), (6, 4, 8), (6, 5, 8), (6, 6, 8), (6, 7, 8), (6, 8, 8); -- Distribuição
 
 CREATE TABLE sensor (
     idSensor INT PRIMARY KEY auto_increment,
@@ -141,9 +141,9 @@ INSERT INTO sensor (numSerie, fkEsteira, fkEmpresa) VALUES
 ('R06', 47, 1), ('Z14', 47, 1), ('B12', 47, 1), ('X19', 47, 1),
 ('C23', 48, 1), ('E09', 48, 1), ('M14', 48, 1), ('Y21', 48, 1);
 
-update sensor set numSerie=12 where idSensor =1;
+update sensor set numSerie= 'A12' where idSensor =1;
 
-select * from sensor;
+select * from esteira;
 SELECT COUNT(*) FROM esteira;
 SELECT COUNT(*) FROM sensor;
 SELECT fkEsteira, COUNT(*) FROM sensor GROUP BY fkEsteira;
@@ -156,3 +156,6 @@ CREATE TABLE monitoramento (
     CONSTRAINT fkSensorMonit FOREIGN KEY (fkSensor)
         REFERENCES sensor(idSensor)
 );
+
+SELECT s.numSerie FROM sensor AS s JOIN esteira AS e ON
+    s.fkEsteira = e.idEsteira WHERE s.fkEsteira = 7 AND e.idSetor = 4;
