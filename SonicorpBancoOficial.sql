@@ -66,12 +66,12 @@ CREATE TABLE esteira (
 );
 
 INSERT INTO esteira (idSetor, numero, metragem) VALUES
-(1, 1, 8), (1, 2, 8), (1, 3, 8), (1, 4, 8), (1, 5, 8), (1, 6, 8), (1, 7, 8), (1, 8, 8), -- Seleção de matéria prima
-(2, 1, 8), (2, 2, 8), (2, 3, 8), (2, 4, 8), (2, 5, 8), (2, 6, 8), (2, 7, 8), (2, 8, 8), -- Higienização
-(3, 1, 8), (3, 2, 8), (3, 3, 8), (3, 4, 8), (3, 5, 8), (3, 6, 8), (3, 7, 8), (3, 8, 8), -- Processamento
-(4, 1, 8), (4, 2, 8), (4, 3, 8), (4, 4, 8), (4, 5, 8), (4, 6, 8), (4, 7, 8), (4, 8, 8), -- Embalagem
-(5, 1, 8), (5, 2, 8), (5, 3, 8), (5, 4, 8), (5, 5, 8), (5, 6, 8), (5, 7, 8), (5, 8, 8), -- Armazenamento
-(6, 1, 8), (6, 2, 8), (6, 3, 8), (6, 4, 8), (6, 5, 8), (6, 6, 8), (6, 7, 8), (6, 8, 8); -- Distribuição
+(1, 1, 8), (1, 2, 8), (1, 3, 8), (1, 4, 8), -- Seleção de matéria prima
+(2, 1, 8), (2, 2, 8), (2, 3, 8), (2, 4, 8), -- Higienização
+(3, 1, 8), (3, 2, 8), (3, 3, 8), (3, 4, 8), -- Processamento
+(4, 1, 8), (4, 2, 8), (4, 3, 8), (4, 4, 8), -- Embalagem
+(5, 1, 8), (5, 2, 8), (5, 3, 8), (5, 4, 8), -- Armazenamento
+(6, 1, 8), (6, 2, 8), (6, 3, 8), (6, 4, 8); -- Distribuição
 
 CREATE TABLE sensor (
     idSensor INT PRIMARY KEY auto_increment,
@@ -88,7 +88,7 @@ CREATE TABLE sensor (
 );
 
 INSERT INTO sensor (numSerie, fkEsteira, fkEmpresa) VALUES
-('X23', 1, 1), ('M12', 1, 1), ('C07', 1, 1), ('T16', 1, 1),
+('A12', 1, 1), ('M12', 1, 1), ('C07', 1, 1), ('T16', 1, 1),
 ('B04', 2, 1), ('Z15', 2, 1), ('H11', 2, 1), ('R21', 2, 1),
 ('Y08', 3, 1), ('J19', 3, 1), ('D13', 3, 1), ('A02', 3, 1),
 ('G20', 4, 1), ('U06', 4, 1), ('N09', 4, 1), ('V18', 4, 1),
@@ -113,47 +113,17 @@ INSERT INTO sensor (numSerie, fkEsteira, fkEmpresa) VALUES
 ('J16', 23, 1), ('S21', 23, 1), ('D08', 23, 1), ('P14', 23, 1),
 ('B07', 24, 1), ('H20', 24, 1), ('N03', 24, 1), ('Q15', 24, 1);
 
-INSERT INTO sensor (numSerie, fkEsteira, fkEmpresa) VALUES
-('F02', 25, 1), ('W19', 25, 1), ('T09', 25, 1), ('G14', 25, 1),
-('X20', 26, 1), ('M05', 26, 1), ('C16', 26, 1), ('K23', 26, 1),
-('E02', 27, 1), ('A11', 27, 1), ('L07', 27, 1), ('O21', 27, 1),
-('J19', 28, 1), ('S05', 28, 1), ('N12', 28, 1), ('Q03', 28, 1),
-('B15', 29, 1), ('U18', 29, 1), ('D23', 29, 1), ('V06', 29, 1),
-('G09', 30, 1), ('T14', 30, 1), ('F03', 30, 1), ('W11', 30, 1),
-('X04', 31, 1), ('M20', 31, 1), ('C08', 31, 1), ('K17', 31, 1),
-('E19', 32, 1), ('A07', 32, 1), ('L14', 32, 1), ('O05', 32, 1),
-('J08', 33, 1), ('S12', 33, 1), ('N21', 33, 1), ('Q06', 33, 1),
-('B03', 34, 1), ('H19', 34, 1), ('D20', 34, 1), ('P11', 34, 1),
-('Y18', 35, 1), ('T07', 35, 1), ('F15', 35, 1), ('G02', 35, 1),
-('X16', 36, 1), ('M23', 36, 1), ('C04', 36, 1), ('K09', 36, 1),
-('E14', 37, 1), ('A02', 37, 1), ('L19', 37, 1), ('O16', 37, 1),
-('J21', 38, 1), ('S09', 38, 1), ('N07', 38, 1), ('Q22', 38, 1),
-('B06', 39, 1), ('U13', 39, 1), ('D03', 39, 1), ('V15', 39, 1),
-('G11', 40, 1), ('T20', 40, 1), ('F08', 40, 1), ('W23', 40, 1);
-
-INSERT INTO sensor (numSerie, fkEsteira, fkEmpresa) VALUES
-('A24', 41, 1), ('C15', 41, 1), ('M09', 41, 1), ('X06', 41, 1),
-('B17', 42, 1), ('E12', 42, 1), ('L08', 42, 1), ('O19', 42, 1),
-('D23', 43, 1), ('F07', 43, 1), ('T14', 43, 1), ('Y05', 43, 1),
-('G04', 44, 1), ('I22', 44, 1), ('P18', 44, 1), ('S11', 44, 1),
-('H10', 45, 1), ('K20', 45, 1), ('U16', 45, 1), ('V09', 45, 1),
-('J03', 46, 1), ('N21', 46, 1), ('Q13', 46, 1), ('W08', 46, 1),
-('R06', 47, 1), ('Z14', 47, 1), ('B12', 47, 1), ('X19', 47, 1),
-('C23', 48, 1), ('E09', 48, 1), ('M14', 48, 1), ('Y21', 48, 1);
-
-update sensor set numSerie= 'A12' where idSensor =1;
-
 select * from esteira;
 SELECT COUNT(*) FROM esteira;
 SELECT COUNT(*) FROM sensor;
 SELECT fkEsteira, COUNT(*) FROM sensor GROUP BY fkEsteira;
 
-CREATE TABLE monitoramento (
-    idMonitoramento INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE registro (
+    idRegistro INT AUTO_INCREMENT PRIMARY KEY,
     fkSensor INT,
     produtoDetectado BOOLEAN, -- Perguntar para a Vivian
-    dtMonitoramento DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fkSensorMonit FOREIGN KEY (fkSensor)
+    dtRegistro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fkSensorRegis FOREIGN KEY (fkSensor)
         REFERENCES sensor(idSensor)
 );
 
